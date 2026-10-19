@@ -1,0 +1,13 @@
+{
+  "name": "mods-do-luiz",
+  "version": "1.0.0",
+  "description": "Pacote dos mods do Luiz: instala todos como dependências.",
+  "dependencies": [
+    { "name": "savvy-progress", "marketplace": "claude-kit" },
+    { "name": "filetree", "marketplace": "claude-code-filetree" },
+    { "name": "cache-tax", "marketplace": "claude-code-mods" },
+    { "name": "blast-radius", "marketplace": "claude-code-playground-mods" },
+    { "name": "replay-theater", "marketplace": "claude-code-playground-mods" },
+    { "name": "reflect-mod", "marketplace": "claude-reflect-marketplace" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "casara-ai-utils",
+  "owner": { "name": "Luiz" },
+  "metadata": { "description": "Utilitários de IA do Luiz Casara: pacotes de mods e plugins para o Claude Code." },
+  "allowCrossMarketplaceDependenciesOn": [
+    "claude-kit",
+    "claude-code-filetree",
+    "claude-code-mods",
+    "claude-code-playground-mods",
+    "claude-reflect-marketplace"
+  ],
+  "plugins": [
+    {
+      "name": "mods-do-luiz",
+      "source": "./plugins/mods-do-luiz",
+      "description": "Instala de uma vez: savvy-progress, filetree, cache-tax, blast-radius, replay-theater e reflect-mod."
+    }
+  ]
+}
