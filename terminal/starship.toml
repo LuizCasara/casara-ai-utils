@@ -1,0 +1,48 @@
+# Starship — https://starship.rs/config/
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Linha em branco entre um comando e o próximo prompt
+add_newline = true
+# git no Windows é lento em repo grande; o padrão (500 ms) gera avisos
+command_timeout = 1500
+
+# Lado direito do prompt: duração e hora em que o comando anterior terminou. Fica no scrollback
+# em cada prompt, então dá pra ler quanto cada comando levou e quando acabou (Enter vazio não mostra).
+# $all (padrão de format) não repete os módulos que estão aqui.
+right_format = "$cmd_duration$time"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+
+[git_status]
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+
+[cmd_duration]
+min_time = 0   # sempre mostra, não só acima de 2 s
+format = "took [$duration]($style) "
+
+[time]
+disabled = false
+time_format = "%d/%m %H:%M:%S"
+format = "[$time]($style)"
+style = "dimmed white"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+# Ruído que não ajuda no dia a dia
+[username]
+disabled = true   # mostrava "Administrator" quando o terminal roda elevado
+
+[hostname]
+disabled = true
+
+[package]
+disabled = true   # versão do pom/package.json, ex.: v1.0-SNAPSHOT
+
+[aws]
+disabled = true   # região da AWS, ex.: us-east-2

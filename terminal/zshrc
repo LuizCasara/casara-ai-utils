@@ -1,0 +1,121 @@
+# zsh — config compartilhada. Fonte da verdade: casara-ai-utils/terminal/ (ver README.md).
+# Carregado pelo loader que setup.sh grava em ~/.zshrc. Não editar ~/.zshrc.
+
+_terminal_dir=${${(%):-%x}:A:h}
+[[ $OSTYPE == (cygwin|msys)* ]] && _is_windows=1 || _is_windows=
+
+# PATH: RTK (e outros binários do usuário) em ~/.local/bin em qualquer sistema
+export PATH="$HOME/.local/bin:$PATH"
+if [[ -n $_is_windows ]]; then
+  # Starship e as ferramentas do winget (fzf, zoxide, eza, bat, btop)
+  export PATH="/c/Program Files/starship/bin:$HOME/AppData/Local/Microsoft/WinGet/Links:$PATH"
+elif [[ -d /opt/homebrew/bin ]]; then
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+fi
+
+export STARSHIP_CONFIG="$_terminal_dir/starship.toml"
+
+# Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+# `history` lista com data e hora de cada comando (o OMZ troca o alias por `history -t <formato>`)
+HIST_STAMPS="%d/%m/%Y %H:%M:%S"
+# Tema vazio: o prompt é o Starship (inicializado no fim do arquivo)
+ZSH_THEME=""
+# No Windows as permissões de pasta sempre parecem "inseguras" para o compinit
+[[ -n $_is_windows ]] && ZSH_DISABLE_COMPFIX=true
+
+# zsh-syntax-highlighting precisa ser o último
+plugins=(git npm mvn gh zsh-autosuggestions zsh-syntax-highlighting)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# Histórico
+HISTSIZE=50000
+SAVEHIST=50000
+# HIST_IGNORE_SPACE: comando começando com espaço não vai pro histórico (ex.: curl com token)
+# EXTENDED_HISTORY: grava no arquivo o instante e a duração de cada comando
+setopt HIST_IGNORE_ALL_DUPS SHARE_HISTORY HIST_IGNORE_SPACE EXTENDED_HISTORY
+
+# Digitar só o nome da pasta entra nela
+setopt AUTO_CD
+
+# Ctrl+Espaço aceita a sugestão cinza do autosuggestions
+bindkey '^ ' autosuggest-accept
+
+# eza no lugar do ls; bat no lugar do cat (\ls e \cat chamam os originais)
+# eza.exe chamado do zsh sem caminho não lista nada; sem argumento de caminho, passa "."
+# (neutro nos outros sistemas: "eza ." é o mesmo que "eza"). Caminho = argumento que existe
+# no disco, para não confundir com o valor de uma opção (ex.: -L 2).
+_eza() {
+  local a
+  for a; do [[ $a != -* && -e $a ]] && { eza "$@"; return } done
+  eza "$@" .
+}
+alias ls='_eza --icons --group-directories-first'
+alias ll='_eza -la --icons --group-directories-first --git'
+alias lt='_eza --tree --level=2 --icons --git-ignore'
+alias cat='bat --paging=never --style=plain'
+
+# btop4win é app de console nativo: num pty do MSYS (VS Code, mintty) sai com "No tty detected!".
+# O winpty do Git for Windows dá a ele um console de verdade.
+if [[ -n $_is_windows ]]; then
+  btop() { if [[ $(tty) == /dev/pty* ]]; then winpty btop.exe "$@"; else command btop "$@"; fi }
+fi
+
+# fzf: Ctrl+R histórico, Ctrl+T arquivos, Alt+C pastas.
+# Listagem pelo find: o walker do fzf.exe devolve caminhos com "\". "-print | cut" em vez de
+# "-printf" porque o find do macOS não tem -printf.
+_fzf_find='command find . -mindepth 1 \( -name .git -o -name node_modules -o -name .next -o -name target \) -prune -o'
+export FZF_DEFAULT_OPTS='--height 40% --layout reverse --border'
+export FZF_CTRL_T_COMMAND="$_fzf_find -print | cut -c3-"
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :200 {} 2>/dev/null || eza --tree --level=1 --icons {}'"
+export FZF_ALT_C_COMMAND="$_fzf_find -type d -print | cut -c3-"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --icons {}'"
+unset _fzf_find
+
+# Atalhos de projeto (project, pst, pdev): só definem funções, os projetos são registrados nas camadas
+source "$_terminal_dir/projects.zsh"
+
+# Camadas de projeto: cada *.zsh da pasta, em ordem alfabética (ajustes só desta máquina ficam em
+# ~/.zshrc.local, carregado pelo loader depois deste arquivo).
+# ZSH_CONF_D: o teste de fumaça (lib/smoke.sh) aponta para uma pasta própria
+: ${ZSH_CONF_D:=$HOME/.config/zsh/conf.d}
+for _f in $ZSH_CONF_D/*.zsh(N); do source $_f; done
+unset _f
+
+# Inits em cache: gerar a cada shell custa 100-300 ms por ferramenta no Windows.
+# Regenera sozinho quando o binário é atualizado. O starship embute o caminho absoluto
+# com aspas quebradas ("Program Files" tem espaço); a troca abaixo põe o nome, que está no PATH.
+# ZSH_INIT_CACHE: o teste de fumaça (lib/smoke.sh) aponta para uma pasta vazia
+: ${ZSH_INIT_CACHE:=$HOME/.cache/zsh-init}
+_cached_init() {
+  local name=$1 bin=$commands[$1] file=$ZSH_INIT_CACHE/$1.zsh; shift
+  [[ -n $bin ]] || return
+  if [[ ! -s $file || $bin -nt $file ]]; then
+    mkdir -p ${file:h}
+    # Substituição literal (sem regex: caminhos como "Program Files (x86)" não precisam de
+    # escape), das formas com aspas para a forma nua
+    local init=$("$@") b
+    for b in "''$bin.exe''" "'$bin.exe'" "''$bin''" "'$bin'" "$bin.exe" "$bin"; do
+      init=${init//"$b"/$name}
+    done
+    print -r -- $init >| $file
+  fi
+  source $file
+}
+_cached_init starship starship init zsh --print-full-init
+_cached_init fzf fzf --zsh
+# zoxide precisa ser o último: "z <pedaço>" pula pra pastas já visitadas, "zi" escolhe no fzf
+_cached_init zoxide zoxide init zsh
+# Bug do zoxide 0.10 no Windows: o init gera `cygpath -w "\builtin pwd -L"` (sem $( )),
+# e cada cd gravaria "C:\builtin pwd -L". Só remenda enquanto o init gerado tiver o bug.
+if [[ -n $_is_windows && -f $ZSH_INIT_CACHE/zoxide.zsh && $(<$ZSH_INIT_CACHE/zoxide.zsh) == *'cygpath -w "\builtin pwd -L"'* ]]; then
+  # Converte /c/x → C:\x sem criar processo
+  __zoxide_pwd() {
+    local p=$PWD
+    [[ $p == /[a-z](/*|) ]] && p="${(U)p[2]}:${p[3,-1]:-/}"
+    print -r -- ${p//\//\\}
+  }
+fi
+
+unset _terminal_dir

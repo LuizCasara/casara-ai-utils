@@ -1,6 +1,26 @@
 # casara-ai-utils
 
-Utilitários de IA do Luiz Casara. Este repositório é um marketplace de plugins do [Claude Code](https://claude.com/claude-code).
+Utilitários de IA do Luiz Casara. Este repositório é um marketplace de plugins do [Claude Code](https://claude.com/claude-code) e guarda também a minha configuração de terminal.
+
+| Pasta | O que é |
+| --- | --- |
+| [`plugins/`](plugins) | Plugins do Claude Code (abaixo) |
+| [`terminal/`](terminal) | zsh + Oh My Zsh + Starship + fzf/zoxide/eza/bat + RTK, reproduzível no Windows e no macOS (abaixo) |
+
+## Terminal (zsh)
+
+Meu terminal inteiro em arquivos versionados e um script idempotente: prompt, histórico, busca
+fuzzy, atalhos por projeto (`run`/`build`/`test` sem sair da pasta, servidores lado a lado), Nerd
+Font e as mesmas cores no Windows Terminal, Ghostty, VS Code, Cursor e Zed. Para replicar numa
+máquina nova:
+
+```sh
+git clone https://github.com/LuizCasara/casara-ai-utils.git ~/casara-ai-utils
+~/casara-ai-utils/terminal/setup.sh            # Windows: no Git Bash. macOS: precisa do Homebrew
+~/casara-ai-utils/terminal/setup.sh --check    # confere, sem alterar nada
+```
+
+Atalhos, camadas de projeto, decisões e workarounds do Windows: [terminal/README.md](terminal/README.md).
 
 ## Plugins
 
