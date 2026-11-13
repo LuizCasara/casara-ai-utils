@@ -30,15 +30,15 @@ Atalhos, camadas de projeto, decisões e workarounds do Windows: [terminal/READM
 
 ### Mods incluídos em `mods-do-luiz`
 
-| Mod | Origem | O que faz |
-| --- | --- | --- |
-| `savvy-progress` | [JohnnyVizz/claude-kit](https://github.com/JohnnyVizz/claude-kit) | Barra de progresso acima do prompt e painel de subagentes |
-| `filetree` | [data-goblin/claude-code-filetree](https://github.com/data-goblin/claude-code-filetree) | Árvore de arquivos na lateral, com destaque do que o Claude lê e escreve |
-| `cache-tax` | [karanb192/claude-code-mods](https://github.com/karanb192/claude-code-mods) | Avisa o custo de retomar um chat com cache frio e mantém o cache quente (`/keepwarm`) |
-| `blast-radius` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Segura comandos arriscados (`rm -rf`, `git reset --hard`, force push) e mostra o que mudariam |
-| `replay-theater` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Replay das edições de arquivo do último turno, um diff por vez |
-| `reflect-mod` | [BayramAnnakov/claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Detecta correções suas e sugere salvá-las como regras no `CLAUDE.md` |
-| `lot-map` | [alexeyw/lot-map](https://github.com/alexeyw/lot-map) | Mapa ao vivo ao lado do chat: memória, arquivos, shell, web, subagentes e hooks acendem conforme são usados |
+| Mod | Origem | O que faz | Em uso |
+| --- | --- | --- | --- |
+| `savvy-progress` | [JohnnyVizz/claude-kit](https://github.com/JohnnyVizz/claude-kit) | Barra de progresso acima do prompt e painel de subagentes | true |
+| `filetree` | [data-goblin/claude-code-filetree](https://github.com/data-goblin/claude-code-filetree) | Árvore de arquivos na lateral, com destaque do que o Claude lê e escreve | false |
+| `cache-tax` | [karanb192/claude-code-mods](https://github.com/karanb192/claude-code-mods) | Avisa o custo de retomar um chat com cache frio e mantém o cache quente (`/keepwarm`) | true |
+| `blast-radius` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Segura comandos arriscados (`rm -rf`, `git reset --hard`, force push) e mostra o que mudariam | false |
+| `replay-theater` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Replay das edições de arquivo do último turno, um diff por vez | false |
+| `reflect-mod` | [BayramAnnakov/claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Detecta correções suas e sugere salvá-las como regras no `CLAUDE.md` | true |
+| `lot-map` | [alexeyw/lot-map](https://github.com/alexeyw/lot-map) | Mapa ao vivo ao lado do chat: memória, arquivos, shell, web, subagentes e hooks acendem conforme são usados | true |
 
 ## Instalação
 
