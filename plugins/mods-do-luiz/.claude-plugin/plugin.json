@@ -8,6 +8,7 @@
     { "name": "cache-tax", "marketplace": "claude-code-mods" },
     { "name": "blast-radius", "marketplace": "claude-code-playground-mods" },
     { "name": "replay-theater", "marketplace": "claude-code-playground-mods" },
-    { "name": "reflect-mod", "marketplace": "claude-reflect-marketplace" }
+    { "name": "reflect-mod", "marketplace": "claude-reflect-marketplace" },
+    { "name": "lot-map", "marketplace": "lot-map" }
   ]
 }

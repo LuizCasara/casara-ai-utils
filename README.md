@@ -26,7 +26,7 @@ Atalhos, camadas de projeto, decisões e workarounds do Windows: [terminal/READM
 
 | Plugin | O que faz |
 | --- | --- |
-| [`mods-do-luiz`](plugins/mods-do-luiz) | Pacote que instala de uma vez 6 mods do Claude Code (veja abaixo). Não contém código: só declara os mods como dependências, então cada um continua vindo do repositório original e recebe as atualizações do autor. |
+| [`mods-do-luiz`](plugins/mods-do-luiz) | Pacote que instala de uma vez 7 mods do Claude Code (veja abaixo). Não contém código: só declara os mods como dependências, então cada um continua vindo do repositório original e recebe as atualizações do autor. |
 
 ### Mods incluídos em `mods-do-luiz`
 
@@ -38,6 +38,7 @@ Atalhos, camadas de projeto, decisões e workarounds do Windows: [terminal/READM
 | `blast-radius` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Segura comandos arriscados (`rm -rf`, `git reset --hard`, force push) e mostra o que mudariam |
 | `replay-theater` | [anthropics/claude-code-playground](https://github.com/anthropics/claude-code-playground) | Replay das edições de arquivo do último turno, um diff por vez |
 | `reflect-mod` | [BayramAnnakov/claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Detecta correções suas e sugere salvá-las como regras no `CLAUDE.md` |
+| `lot-map` | [alexeyw/lot-map](https://github.com/alexeyw/lot-map) | Mapa ao vivo ao lado do chat: memória, arquivos, shell, web, subagentes e hooks acendem conforme são usados |
 
 ## Instalação
 
@@ -50,6 +51,7 @@ claude plugin marketplace add johnnyvizz/claude-kit
 claude plugin marketplace add data-goblin/claude-code-filetree
 claude plugin marketplace add karanb192/claude-code-mods
 claude plugin marketplace add bayramannakov/claude-reflect
+claude plugin marketplace add alexeyw/lot-map
 
 git clone https://github.com/anthropics/claude-code-playground.git ~/claude-code-playground
 claude plugin marketplace add ~/claude-code-playground/claude-code/mods
