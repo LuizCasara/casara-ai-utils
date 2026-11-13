@@ -40,6 +40,14 @@ Atalhos, camadas de projeto, decisões e workarounds do Windows: [terminal/READM
 | `reflect-mod` | [BayramAnnakov/claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Detecta correções suas e sugere salvá-las como regras no `CLAUDE.md` | true |
 | `lot-map` | [alexeyw/lot-map](https://github.com/alexeyw/lot-map) | Mapa ao vivo ao lado do chat: memória, arquivos, shell, web, subagentes e hooks acendem conforme são usados | true |
 
+### Mapeados, fora do pacote
+
+Mods que olhei e deixei anotados. Não são dependências de `mods-do-luiz`, então o pacote não os instala.
+
+| Mod | Origem | O que faz | Em uso |
+| --- | --- | --- | --- |
+| `agentmon-live` | [codenotary/agentmon-live](https://github.com/codenotary/agentmon-live) | Painel ao vivo, ao lado do chat ou no navegador, com chamadas, subagentes, custo e limites. Sobe um servidor local em segundo plano (porta 47311) e tem uma chamada de modelo opcional (`advisorMode`). Revisado em 13/11/2026: sem nada malicioso | false |
+
 ## Instalação
 
 Requer Claude Code 2.1.287 ou mais novo. Mods rodam no terminal, na aba Code do app Desktop e na extensão do VS Code (2.1.299+); não rodam em sessões WSL do app Desktop.
